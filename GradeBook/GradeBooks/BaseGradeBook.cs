@@ -13,7 +13,7 @@ namespace GradeBook.GradeBooks
     {
         public GradeBookType Type { get; set; }
 
-        public bool IsWeighted {get; set; }
+        public bool IsWeighted { get; set; }
         public string Name { get; set; }
         public List<Student> Students { get; set; }
 
@@ -118,10 +118,6 @@ namespace GradeBook.GradeBooks
             switch (letterGrade)
             {
                 case 'A':
-                    if(studentType == "Honors")
-                    {
-                        return 5;
-                    }
                     return 4;
                 case 'B':
                     return 3;
@@ -132,8 +128,61 @@ namespace GradeBook.GradeBooks
                 case 'F':
                     return 0;
             }
-
+            if(studentType == StudentType.Honors || studentType == StudentType.DualEnrolled)
+            {
+                return letterGrade++;
+            }
             return 0;
+            /*switch (letterGrade)
+            {
+                case 'A':
+                    switch (studentType)
+                    {
+                        case StudentType.Honors:
+                            return 5;
+                        case StudentType.DualEnrolled:
+                            return 5;
+                    }
+                    return 4;
+                case 'B':
+                    switch (studentType)
+                    {
+                        case StudentType.Honors:
+                            return 4;
+                        case StudentType.DualEnrolled:
+                            return 4;
+                    }
+                    return 3;
+                case 'C':
+                    switch (studentType)
+                    {
+                        case StudentType.Honors:
+                            return 3;
+                        case StudentType.DualEnrolled:
+                            return 3;
+                    }
+                    return 2;
+                case 'D':
+                    switch (studentType)
+                    {
+                        case StudentType.Honors:
+                            return 2;
+                        case StudentType.DualEnrolled:
+                            return 2;
+                    }
+                    return 1;
+                case 'F':
+                    switch (studentType)
+                    {
+                        case StudentType.Honors:
+                            return 1;
+                        case StudentType.DualEnrolled:
+                            return 1;
+                    }
+                    return 0;
+            }
+
+            return 0;*/
         }
 
         public virtual void CalculateStatistics()
@@ -277,7 +326,7 @@ namespace GradeBook.GradeBooks
                              from type in assembly.GetTypes()
                              where type.FullName == "GradeBook.GradeBooks.StandardGradeBook"
                              select type).FirstOrDefault();
-            
+
             return JsonConvert.DeserializeObject(json, gradebook);
         }
     }
