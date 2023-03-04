@@ -115,74 +115,31 @@ namespace GradeBook.GradeBooks
 
         public virtual double GetGPA(char letterGrade, StudentType studentType)
         {
+            var gpa = 0;
             switch (letterGrade)
             {
                 case 'A':
-                    return 4;
+                    gpa = 4;
+                    break;
                 case 'B':
-                    return 3;
+                    gpa = 3;
+                    break;
                 case 'C':
-                    return 2;
+                    gpa = 2;
+                    break;
                 case 'D':
-                    return 1;
+                    gpa = 1;
+                    break;
                 case 'F':
-                    return 0;
+                    gpa = 0;
+                    break;
             }
-            if(studentType == StudentType.Honors || studentType == StudentType.DualEnrolled)
+            if(IsWeighted && (studentType == StudentType.Honors || studentType == StudentType.DualEnrolled))
             {
-                return letterGrade++;
-            }
-            return 0;
-            /*switch (letterGrade)
-            {
-                case 'A':
-                    switch (studentType)
-                    {
-                        case StudentType.Honors:
-                            return 5;
-                        case StudentType.DualEnrolled:
-                            return 5;
-                    }
-                    return 4;
-                case 'B':
-                    switch (studentType)
-                    {
-                        case StudentType.Honors:
-                            return 4;
-                        case StudentType.DualEnrolled:
-                            return 4;
-                    }
-                    return 3;
-                case 'C':
-                    switch (studentType)
-                    {
-                        case StudentType.Honors:
-                            return 3;
-                        case StudentType.DualEnrolled:
-                            return 3;
-                    }
-                    return 2;
-                case 'D':
-                    switch (studentType)
-                    {
-                        case StudentType.Honors:
-                            return 2;
-                        case StudentType.DualEnrolled:
-                            return 2;
-                    }
-                    return 1;
-                case 'F':
-                    switch (studentType)
-                    {
-                        case StudentType.Honors:
-                            return 1;
-                        case StudentType.DualEnrolled:
-                            return 1;
-                    }
-                    return 0;
+                gpa++;
             }
 
-            return 0;*/
+            return gpa;
         }
 
         public virtual void CalculateStatistics()
